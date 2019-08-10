@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+message User {
+    string id = 1;
+    string userName = 2;
+    google.protobuf.Timestamp created_at = 3;
+    google.protobuf.Timestamp updated_at = 4;
+}
+
+message LoginRequest {
+    string userName = 1;
+    string pswd = 2;
+}
+
+message LoginResponse {
+    User User = 1;
+    string code = 2;
+    string error = 3;
+}
+
+message SignUpRequest {
+    string userName = 1;
+    string pswd = 2;
+}
+
+message SingUpRespond {
+    string code = 1;
+    string error = 2;
+}
+
+service UserService {
+    rpc Login (LoginRequest) returns (LoginResponse);
+    rpc SignUp (SignUpRequest) returns (SingUpRespond);
+}
