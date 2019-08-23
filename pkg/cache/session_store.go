@@ -1,6 +1,10 @@
 package cache
 
-import "github.com/google/uuid"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
 
 type SessionStore interface {
 	New(data map[string]interface{}) (sessionID string, err error)
@@ -24,7 +28,8 @@ func (s *SessionRedisStore) New(data map[string]interface{}) (sessionID string, 
 	uid := uuid.New().String()
 	err = s.CacheStore.New(uid, data)
 	if err != nil {
-		return "", nil
+		fmt.Println(err)
+		return "", err
 	}
 	return uid, nil
 }

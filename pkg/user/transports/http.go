@@ -17,16 +17,50 @@ import (
 	jsonpatch "github.com/evanphx/json-patch"
 )
 
-func httpGetSessionData(ctx context.Context, r *http.Request) context.Context {
-	return ctx
+func httpGetSessionData(sessionStore cache.SessionStore) httptransport.RequestFunc {
+	return func(ctx context.Context, r *http.Request) context.Context {
+		cookie, err := r.Cookie(sessionStore.HeaderKey())
+		sessionID := ""
+		if err != nil && err != http.ErrNoCookie {
+			return ctx
+		} else if err == nil {
+			sessionID = cookie.Value
+		}
+
+		if sessionID == "" {
+			sessionID = r.Header.Get(sessionStore.HeaderKey())
+			if sessionID == "" {
+				return ctx
+			}
+		}
+
+		data, err := sessionStore.GetData(sessionID)
+		if err != nil {
+			return ctx
+		}
+		ctx = context.WithValue(ctx, sessionStore.ContextKey(), sessionID)
+		ctx = context.WithValue(ctx, "session-data", data)
+		return ctx
+	}
 }
 
 func httpAssignSession(sessionStore cache.SessionStore) httptransport.ServerResponseFunc {
 	return func(ctx context.Context, w http.ResponseWriter) context.Context {
+		var err error
 		sessionID, ok := ctx.Value(sessionStore.ContextKey()).(string)
 		if !ok {
-			w.Header().Set(sessionStore.HeaderKey(), sessionID)
+			sessionID, err = sessionStore.New(map[string]interface{}{"test": "Hey"})
+			if err != nil {
+				return ctx
+			}
 		}
+		w.Header().Set(sessionStore.HeaderKey(), sessionID)
+		cookie := &http.Cookie{
+			Name:  sessionStore.HeaderKey(),
+			Value: sessionID,
+			Path:  "/",
+		}
+		http.SetCookie(w, cookie)
 		return ctx
 	}
 }
@@ -37,8 +71,10 @@ func NewHTTPHandler(ctx context.Context, endpoints endpoints.EndPoints, logger l
 	options := []httptransport.ServerOption{
 		httptransport.ServerErrorEncoder(encodeError),
 		httptransport.ServerErrorLogger(errorLogger),
-		httptransport.ServerBefore(httpGetSessionData),
-		httptransport.ServerAfter(httpAssignSession(sessionStore)),
+		httptransport.ServerBefore(httpGetSessionData(sessionStore)),
+		httptransport.ServerAfter(
+			httpAssignSession(sessionStore),
+		),
 	}
 
 	LoginHTTPHandler := httptransport.NewServer(

@@ -28,10 +28,6 @@ import (
 	"mysite/pkg/user/pb"
 	"mysite/pkg/user/service"
 	"mysite/pkg/user/transports"
-
-	stdjwt "github.com/dgrijalva/jwt-go"
-
-	"github.com/go-kit/kit/auth/jwt"
 )
 
 func init() {
@@ -90,15 +86,14 @@ var startCmd = &cobra.Command{
 		}
 
 		userLogger := log.With(logger, "svs", "user")
-		s := service.NewUserService(userLogger, db, cache.NewRedisCacheStore("localhost:6789", "", "session:"))
+		s := service.NewUserService(userLogger, db, cache.NewRedisCacheStore("localhost:6379", "", "cache:"))
 
-		kf := func(token *stdjwt.Token) (interface{}, error) { return []byte("SigningString"), nil }
 		Endpoints := endpoints.EndPoints{
-			LoginEndPoint:  jwt.NewParser(kf, stdjwt.SigningMethodHS256, jwt.StandardClaimsFactory)(endpoints.MakeLoginEndPoint(s)),
+			LoginEndPoint:  endpoints.MakeLoginEndPoint(s),
 			SignUpEndPoint: endpoints.MakeSinUpEndPoint(s),
 		}
 
-		h := transports.NewHTTPHandler(context.WithValue(context.Background(), "JWTToken", ""), Endpoints, logger)
+		h := transports.NewHTTPHandler(context.Background(), Endpoints, logger, cache.NewSessionRedisStore(cache.NewRedisCacheStore("localhost:6379", "", "cache:"), "session-id", ""))
 		go func() {
 			err := http.ListenAndServe(":8080", h)
 			if err != nil {

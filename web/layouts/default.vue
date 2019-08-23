@@ -1,8 +1,39 @@
 <template>
   <div>
-    <nuxt />
+    <nav-bar :login="login" :userInfo="userInfo" />
+    <b-container fluid id="nuxt-page">
+      <nuxt />
+    </b-container>
   </div>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+import NavBar from '~/components/NavBar.vue'
+
+export default {
+  components: {
+    NavBar
+  },
+  data() {
+    return {}
+  },
+  computed: mapState({
+    userInfo: state => state.auth.userInfo
+  }),
+  methods: {
+    async login() {
+      await this.$store.dispatch('login', {
+        username: this.email,
+        password: this.password
+      })
+    },
+    handleAuthentication(data) {
+      console.log(this.$cookie.get('session-id'))
+    }
+  }
+}
+</script>
 
 <style>
 html {
@@ -17,39 +48,7 @@ html {
   box-sizing: border-box;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+#nuxt-page {
+  margin-top: 20px;
 }
 </style>

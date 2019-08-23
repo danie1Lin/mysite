@@ -51,7 +51,6 @@ func NewGrpcServer(_ context.Context, endpoint endpoints.EndPoints, logger log.L
 		login:  grpc.NewServer(endpoint.LoginEndPoint, grpcDecodeLoginRequest, grpcEncodeLoginResponse, grpc.ServerErrorHandler(&grpcErrorHandler{logger: logger}), grpc.ServerErrorLogger(logger), grpc.ServerBefore(jwt.GRPCToContext())),
 		signUp: grpc.NewServer(endpoint.SignUpEndPoint, grpcDecodeSinUpRequest, grpcEncodeSignUpResponse, grpc.ServerErrorHandler(&grpcErrorHandler{logger: logger}), grpc.ServerErrorLogger(logger)),
 	}
-
 }
 
 func grpcEncodeLoginResponse(_ context.Context, r interface{}) (interface{}, error) {

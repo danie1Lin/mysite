@@ -1,26 +1,38 @@
 <template>
-  <b-navbar pills>
-    <b-navbar-brand>{{ brandName }}</b-navbar-brand>
+  <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar-brand href="/">Daniel's Blog</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav v-for="(item, index) in leftItems" v-bind:key="index">
-        <b-nav-item v-bind:href="item.href">{{ item.name }}</b-nav-item>
+      <b-navbar-nav>
+        <b-nav-item href="/blog">Blog</b-nav-item>
+        <b-nav-item href="/blog/new">New Post</b-nav-item>
       </b-navbar-nav>
-      <b-navbar-nav
-        class="ml-auto"
-        v-for="(item, index) in rightItems"
-        v-bind:key="index"
-      >
-        <b-nav-item v-bind:href="item.href" @click="item.click">{{
-          item.name
-        }}</b-nav-item>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item v-show="_.isNull(userInfo)" href="/login" right
+          >Login</b-nav-item
+        >
+        <b-nav-item-dropdown
+          v-show="!_.isNull(userInfo)"
+          :text="_.get(userInfo, 'userName')"
+          right
+        >
+          <b-dropdown-item href="/account">Account</b-dropdown-item>
+          <b-dropdown-item @click="logout()">log out</b-dropdown-item>
+        </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  props: ['brandName', 'leftItems', 'rightItems'],
-  methods: {}
+  computed: mapState({
+    userInfo: state => {
+      console.log(state.auth.userInfo)
+      return state.auth.userInfo
+    }
+  }),
+  methods: mapActions('auth', ['logout'])
 }
 </script>

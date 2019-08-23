@@ -2,8 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _21ebe2c7 = () => interopDefault(import('../pages/blog.vue' /* webpackChunkName: "pages/blog" */))
+const _37b43598 = () => interopDefault(import('../pages/account.vue' /* webpackChunkName: "pages/account" */))
+const _38bef80a = () => interopDefault(import('../pages/blog/index.vue' /* webpackChunkName: "pages/blog/index" */))
 const _01f5892c = () => interopDefault(import('../pages/callback.vue' /* webpackChunkName: "pages/callback" */))
+const _7d7d5594 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
+const _569549d8 = () => interopDefault(import('../pages/blog/new.vue' /* webpackChunkName: "pages/blog/new" */))
 const _98549b06 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 Vue.use(Router)
@@ -81,13 +84,25 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
+      path: "/account",
+      component: _37b43598,
+      name: "account"
+    }, {
       path: "/blog",
-      component: _21ebe2c7,
+      component: _38bef80a,
       name: "blog"
     }, {
       path: "/callback",
       component: _01f5892c,
       name: "callback"
+    }, {
+      path: "/login",
+      component: _7d7d5594,
+      name: "login"
+    }, {
+      path: "/blog/new",
+      component: _569549d8,
+      name: "blog-new"
     }, {
       path: "/",
       component: _98549b06,

@@ -11,9 +11,12 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_nuxticons_65d1e467 from 'nuxt_plugin_nuxticons_65d1e467' // Source: ./nuxt-icons.js (mode: 'all')
 import nuxt_plugin_bootstrapvue_625b4aa0 from 'nuxt_plugin_bootstrapvue_625b4aa0' // Source: ./bootstrap-vue.js (mode: 'all')
+import nuxt_plugin_cookieuniversalnuxt_a119e9ae from 'nuxt_plugin_cookieuniversalnuxt_a119e9ae' // Source: ./cookie-universal-nuxt.js (mode: 'all')
+import nuxt_plugin_nuxticons_65d1e467 from 'nuxt_plugin_nuxticons_65d1e467' // Source: ./nuxt-icons.js (mode: 'all')
 import nuxt_plugin_axios_799a8d81 from 'nuxt_plugin_axios_799a8d81' // Source: ./axios.js (mode: 'all')
+import nuxt_plugin_axios_de5f1332 from 'nuxt_plugin_axios_de5f1332' // Source: ../plugin/axios.js (mode: 'all')
+import nuxt_plugin_lodash_20fb025c from 'nuxt_plugin_lodash_20fb025c' // Source: ../plugin/lodash.js (mode: 'all')
 
 // Component: <NoSsr>
 Vue.component(NoSsr.name, NoSsr)
@@ -35,7 +38,7 @@ Vue.use(Meta, {
   tagIDKeyName: 'hid' // the property name that vue-meta uses to determine whether to overwrite or append a tag
 })
 
-const defaultTransition = {"name":"page","mode":"out-in","appear":false,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}
+const defaultTransition = {"name":"page","mode":"out-in","appear":true,"appearClass":"appear","appearActiveClass":"appear-active","appearToClass":"appear-to"}
 
 async function createApp(ssrContext) {
   const router = await createRouter(ssrContext)
@@ -43,10 +46,6 @@ async function createApp(ssrContext) {
   const store = createStore(ssrContext)
   // Add this.$router into store actions/mutations
   store.$router = router
-
-  // Fix SSR caveat https://github.com/nuxt/nuxt.js/issues/3757#issuecomment-414689141
-  const registerModule = store.registerModule
-  store.registerModule = (path, rawModule, options) => registerModule.call(store, path, rawModule, Object.assign({ preserveState: process.client }, options))
 
   // Create Root instance
 
@@ -153,16 +152,28 @@ async function createApp(ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_nuxticons_65d1e467 === 'function') {
-    await nuxt_plugin_nuxticons_65d1e467(app.context, inject)
-  }
-
   if (typeof nuxt_plugin_bootstrapvue_625b4aa0 === 'function') {
     await nuxt_plugin_bootstrapvue_625b4aa0(app.context, inject)
   }
 
+  if (typeof nuxt_plugin_cookieuniversalnuxt_a119e9ae === 'function') {
+    await nuxt_plugin_cookieuniversalnuxt_a119e9ae(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_nuxticons_65d1e467 === 'function') {
+    await nuxt_plugin_nuxticons_65d1e467(app.context, inject)
+  }
+
   if (typeof nuxt_plugin_axios_799a8d81 === 'function') {
     await nuxt_plugin_axios_799a8d81(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_axios_de5f1332 === 'function') {
+    await nuxt_plugin_axios_de5f1332(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_lodash_20fb025c === 'function') {
+    await nuxt_plugin_lodash_20fb025c(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

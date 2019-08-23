@@ -7,8 +7,6 @@ const VUEX_PROPERTIES = ['state', 'getters', 'actions', 'mutations']
 let store = {}
 
 void (function updateModules() {
-  store = normalizeRoot(require('../store/index.js'), 'store/index.js')
-
   // If store is an exported method = classic mode (deprecated)
 
   if (typeof store === 'function') {
@@ -19,6 +17,7 @@ void (function updateModules() {
   store.modules = store.modules || {}
 
   resolveStoreModules(require('../store/articles.js'), 'articles.js')
+  resolveStoreModules(require('../store/auth.js'), 'auth.js')
 
   // If the environment supports hot reloading...
 
@@ -26,7 +25,7 @@ void (function updateModules() {
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '../store/articles.js',
-      '../store/index.js',
+      '../store/auth.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

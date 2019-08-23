@@ -1,85 +1,28 @@
 <template>
-  <div>
-    <nav-bar
-      :brand-name="name"
-      :left-items="leftNavItems"
-      :right-items="rightNavItems"
-    />
-    <b-row>
-      <b-col></b-col>
-      <b-col>
-        <logo />
-        <h1 class="title">
-          mysite
-        </h1>
-        <h2 class="subtitle">
-          my personal site
-        </h2>
-        <div class="links">
-          <a
-            href="https://github.com/daniel840829"
-            target="_blank"
-            class="button--grey"
-          >
-            GitHub
-          </a>
-        </div>
-      </b-col>
-      <b-col>
-        <b-list-group style="overflow-y:auto; height:300px">
-          <b-list-group-item>Cras justo odio</b-list-group-item>
-          <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-          <b-list-group-item>Morbi leo risus</b-list-group-item>
-          <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-          <b-list-group-item>Vestibulum at eros</b-list-group-item>
-          <b-list-group-item>Cras justo odio</b-list-group-item>
-          <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-          <b-list-group-item>Morbi leo risus</b-list-group-item>
-          <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-          <b-list-group-item>Vestibulum at eros</b-list-group-item>
-          <b-list-group-item>Cras justo odio</b-list-group-item>
-          <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-          <b-list-group-item>Morbi leo risus</b-list-group-item>
-          <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-          <b-list-group-item>Vestibulum at eros</b-list-group-item>
-          <b-list-group-item>Cras justo odio</b-list-group-item>
-          <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-          <b-list-group-item>Morbi leo risus</b-list-group-item>
-          <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-          <b-list-group-item>Vestibulum at eros</b-list-group-item>
-        </b-list-group>
-      </b-col>
-    </b-row>
-  </div>
+  <b-container>
+    <logo class="row justify-content-center" />
+    <h1 class="title">
+      Daniel Lin's Blog
+    </h1>
+    <h2 class="subtitle">
+      my personal site
+    </h2>
+    <div class="links">
+      <a
+        href="https://github.com/daniel840829"
+        target="_blank"
+        class="button--grey"
+      >
+        GitHub
+      </a>
+    </div>
+  </b-container>
 </template>
-
 <script>
 import Logo from '~/components/Logo.vue'
-import NavBar from '~/components/NavBar.vue'
-
 export default {
   components: {
-    Logo,
-    NavBar
-  },
-  data() {
-    return {
-      name: 'Danel',
-      leftNavItems: [{ name: 'blog', href: 'blog' }],
-      rightNavItems: [{ name: 'Login', href: '#', click: this.login }]
-    }
-  },
-  methods: {
-    async login() {
-      await this.$store.dispatch('login', {
-        username: 'daniel',
-        password: 'pass'
-      })
-      console.log(this.$store.state.authUser)
-    },
-    handleAuthentication(data) {
-      console.log(data)
-    }
+    Logo
   }
 }
 </script>
