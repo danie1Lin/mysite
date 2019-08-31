@@ -17,6 +17,7 @@ import nuxt_plugin_nuxticons_65d1e467 from 'nuxt_plugin_nuxticons_65d1e467' // S
 import nuxt_plugin_axios_799a8d81 from 'nuxt_plugin_axios_799a8d81' // Source: ./axios.js (mode: 'all')
 import nuxt_plugin_axios_de5f1332 from 'nuxt_plugin_axios_de5f1332' // Source: ../plugin/axios.js (mode: 'all')
 import nuxt_plugin_lodash_20fb025c from 'nuxt_plugin_lodash_20fb025c' // Source: ../plugin/lodash.js (mode: 'all')
+import nuxt_plugin_localStorage_05bac801 from 'nuxt_plugin_localStorage_05bac801' // Source: ../plugin/localStorage.js (mode: 'all')
 
 // Component: <NoSsr>
 Vue.component(NoSsr.name, NoSsr)
@@ -174,6 +175,10 @@ async function createApp(ssrContext) {
 
   if (typeof nuxt_plugin_lodash_20fb025c === 'function') {
     await nuxt_plugin_lodash_20fb025c(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_localStorage_05bac801 === 'function') {
+    await nuxt_plugin_localStorage_05bac801(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

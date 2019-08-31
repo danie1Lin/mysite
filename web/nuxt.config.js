@@ -1,8 +1,6 @@
 export default {
   mode: 'spa',
-  /*
-   ** Headers of the page
-   */
+
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -27,14 +25,12 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['plugin/axios.js', 'plugin/lodash.js'],
+  plugins: ['plugin/axios.js', 'plugin/lodash.js', 'plugin/localStorage.js'],
   /*
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/eslint-module',

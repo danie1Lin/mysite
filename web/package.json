@@ -15,6 +15,7 @@
     "dev-debug": "node --inspect node_modules/.bin/nuxt"
   },
   "dependencies": {
+    "@johmun/vue-tags-input": "^2.1.0",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^2.6.0",
     "body-parser": "^1.19.0",
@@ -31,6 +32,7 @@
     "passport-auth0": "^1.1.0",
     "vue-language-server": "0.0.57",
     "vue-lodash": "^2.0.2",
+    "vuex-persistedstate": "^2.5.4",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {

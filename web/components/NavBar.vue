@@ -29,7 +29,6 @@ import { mapState, mapActions } from 'vuex'
 export default {
   computed: mapState({
     userInfo: state => {
-      console.log(state.auth.userInfo)
       return state.auth.userInfo
     }
   }),

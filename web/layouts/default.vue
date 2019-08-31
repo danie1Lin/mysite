@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav-bar :login="login" :userInfo="userInfo" />
+    <nav-bar id="header-nav" :login="login" :userInfo="userInfo" />
     <b-container fluid id="nuxt-page">
       <nuxt />
     </b-container>
@@ -28,14 +28,17 @@ export default {
         password: this.password
       })
     },
-    handleAuthentication(data) {
-      console.log(this.$cookie.get('session-id'))
-    }
+    handleAuthentication(data) {}
   }
 }
 </script>
 
 <style>
+* {
+  font-family: 'Helvetica', 'Arial', 'LiHei Pro', '黑體-繁', '微軟正黑體',
+    sans-serif;
+}
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -49,6 +52,38 @@ html {
 }
 
 #nuxt-page {
-  margin-top: 20px;
+}
+
+#login-panel {
+  padding: 30px;
+  margin: 10px;
+  background: #90d2dd;
+  border: #27a1b8;
+  border-radius: 20px;
+}
+button {
+  margin-top: 10px;
+}
+
+input + label {
+  margin-top: 10px;
+}
+
+.blog-post-content {
+  padding: 30px;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 0px;
+}
+
+#header-nav {
+  height: 4rem;
+  top: 0px;
+  position: sticky;
+  position: -webkit-sticky;
 }
 </style>

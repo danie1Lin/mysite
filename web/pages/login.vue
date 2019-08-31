@@ -31,18 +31,3 @@ export default {
   methods: mapActions('auth', ['login'])
 }
 </script>
-
-<style>
-#login-panel {
-  padding: 30px;
-  margin: 10px;
-  background: #90d2dd;
-  border: #27a1b8;
-  border-radius: 20px;
-}
-</style>
-<style scoped>
-button {
-  margin-top: 10px;
-}
-</style>
