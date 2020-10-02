@@ -1,0 +1,130 @@
+$mix-blend-border-width: 2rem;
+$window-width: 60%;
+
+.avatar {
+  border-radius: 10%;
+  width: auto;
+  height: auto;
+  max-height: 100px;
+}
+
+$window-height: 80%;
+
+%mix-blend-box {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  content: "";
+}
+
+.window {
+  margin-bottom: calc(4rem + 2 * #{$mix-blend-border-width});
+  margin-top: calc(2 * #{$mix-blend-border-width});
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &:before {
+    @extend %mix-blend-box;
+    z-index: 0;
+    width: calc(#{$window-width} + 2 * #{$mix-blend-border-width});
+    height: 100%;
+    border: $mix-blend-border-width solid red;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: red;
+    transition: all 0.5s ease-in-out;
+    mix-blend-mode: lighten;
+  }
+
+  &:after {
+    @extend %mix-blend-box;
+    z-index: 1;
+    width: calc(#{$window-width});
+    height: 0;
+    background: #01d3fb;
+    mix-blend-mode: overlay;
+    transition: all 1s ease-in-out;
+  }
+
+  &:hover {
+    &:before {
+      background-color: transparent;
+    }
+    &:after {
+      height: 100%;
+    }
+  }
+
+  & > div {
+    z-index: 2;
+    position: relative;
+    width: $window-width;
+    display: flex;
+    flex-wrap: wrap;
+
+    & > div {
+      background: white;
+      text-align: center;
+      width: 100%;
+    }
+
+    & > div.timeline-axis {
+      height: 100%;
+      background-color: transparent;
+      width: 10px;
+      border: 3px solid white;
+      position: absolute;
+    }
+  }
+
+  .mix {
+    mix-blend-mode: lighten;
+  }
+}
+
+.page {
+  overflow-y: auto;
+  height: 100vh;
+  background-image: url("~assets/index-background.jpg");
+  background-position: 0 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.logo-icon {
+  height: 1em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+
+.container {
+  margin: 0 auto;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.title {
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  display: block;
+  font-size: 10vw;
+  color: rgb(63, 62, 62);
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 7vw;
+  font-weight: bold;
+  color: #526488;
+  word-spacing: 0.7rem;
+  padding: 15px;
+}
+
+.transparent {
+  background: transparent;
+}

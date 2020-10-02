@@ -1,0 +1,62 @@
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.8s;
+}
+.bounce-leave-active {
+  animation: bounce-out 0.5s;
+}
+
+.nthu {
+  background-position: center;
+  display: inline-block;
+  width: 4em;
+  height: 4em;
+  background-size: cover;
+  background-image: url("~assets/nthu.png");
+}
+
+.kktix {
+  display: block;
+  > img {
+    max-width: 100%;
+  } 
+}
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.8s;
+}
+.bounce-leave-active {
+  animation: bounce-out 0.5s;
+}
+
+.nthu {
+  background-position: center;
+  display: inline-block;
+  width: 4em;
+  height: 4em;
+  background-size: cover;
+  background-image: url("~assets/nthu.png");
+}
+
+.kktix {
+  display: block;
+  > img {
+    max-width: 100%;
+  } 
+}

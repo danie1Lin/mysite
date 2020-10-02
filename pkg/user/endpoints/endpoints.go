@@ -5,6 +5,7 @@ import (
 )
 
 type EndPoints struct {
-	LoginEndPoint  endpoint.Endpoint
-	SignUpEndPoint endpoint.Endpoint
+	LoginEndPoint      endpoint.Endpoint
+	SignUpEndPoint     endpoint.Endpoint
+	GetProfileEndPoint endpoint.Endpoint
 }

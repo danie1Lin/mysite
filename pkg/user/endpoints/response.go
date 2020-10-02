@@ -4,12 +4,20 @@ type Response interface {
 	Code() string
 	Error() string
 	Meta() map[string]string
+	Message() string
+	StatusCode() int
 }
 
 type response struct {
-	code  string
-	error error
-	meta  map[string]string
+	statusCode int
+	code       string
+	error      error
+	meta       map[string]string
+	message    string
+}
+
+func (r *response) StatusCode() int {
+	return r.statusCode
 }
 
 func (r *response) Code() string {
@@ -25,4 +33,8 @@ func (r *response) Error() string {
 
 func (r *response) Meta() map[string]string {
 	return r.meta
+}
+
+func (r *response) Message() string {
+	return r.message
 }

@@ -3,7 +3,7 @@ package errors
 type Error interface {
 	error
 	Code() string
-	Detail() map[string][]string
+	Details() map[string][]string
 	AddDetail(fieldName, message string)
 }
 
@@ -31,6 +31,10 @@ func (e *Err) AddDetail(fieldName, message string) {
 	}
 }
 
+func (e *Err) Details() map[string][]string {
+	return e.details
+}
+
 func New(code string, message string) *Err {
 	return &Err{
 		code:    code,
@@ -50,7 +54,7 @@ func Code(err error) string {
 func Details(err error) map[string][]string {
 	e, ok := err.(Error)
 	if ok {
-		return e.Detail()
+		return e.Details()
 	}
 	return nil
 }

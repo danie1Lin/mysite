@@ -1,0 +1,51 @@
+.post-title {
+  font-size: 50px;
+}
+
+.post-content {
+  font-size: 20px;
+
+  > h1 {
+    font-size: 30px;
+  }
+
+  > h2 {
+    font-size: 20px;
+  }
+
+  > p {
+    font-size: 16px;
+  }
+  > pre {
+    background: #b8daff;
+    font-size: 16px;
+    padding: 30px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin-left: 2em;
+    margin-right: 2rem;
+  }
+
+  > pre::after {
+    content: "<code>";
+  }
+
+  > code {
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+  }
+
+  > p > img {
+    height: auto;
+    width: 80%;
+  }
+
+  &.preview {
+    padding: 30px;
+    border: 2px solid #b8daff;
+    border-radius: 2.5px;
+  }
+}

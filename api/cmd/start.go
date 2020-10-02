@@ -71,6 +71,7 @@ var startCmd = &cobra.Command{
 				level.Info(dbLogger).Log("migration", "no change")
 			} else {
 				level.Error(dbLogger).Log("ERR", err)
+				panic(err)
 			}
 		}
 
@@ -86,14 +87,16 @@ var startCmd = &cobra.Command{
 		}
 
 		userLogger := log.With(logger, "svs", "user")
-		s := service.NewUserService(userLogger, db, cache.NewRedisCacheStore("localhost:6379", "", "cache:"))
+		sessionStore := cache.NewSessionRedisStore(cache.NewRedisCacheStore("localhost:6379", "", "cache:"), "session-id", "")
+		s := service.NewUserService(userLogger, db, cache.NewRedisCacheStore("localhost:6379", "", "cache:"), sessionStore)
 
 		Endpoints := endpoints.EndPoints{
-			LoginEndPoint:  endpoints.MakeLoginEndPoint(s),
-			SignUpEndPoint: endpoints.MakeSinUpEndPoint(s),
+			LoginEndPoint:      endpoints.MakeLoginEndPoint(s),
+			SignUpEndPoint:     endpoints.MakeSinUpEndPoint(s),
+			GetProfileEndPoint: endpoints.MakeGetProfileEndPoint(s),
 		}
 
-		h := transports.NewHTTPHandler(context.Background(), Endpoints, logger, cache.NewSessionRedisStore(cache.NewRedisCacheStore("localhost:6379", "", "cache:"), "session-id", ""))
+		h := transports.NewHTTPHandler(context.Background(), Endpoints, logger, sessionStore)
 		go func() {
 			err := http.ListenAndServe(":8080", h)
 			if err != nil {
@@ -114,7 +117,6 @@ var startCmd = &cobra.Command{
 				level.Error(logger).Log("end", err)
 			}
 		}
-
 	},
 }
 
